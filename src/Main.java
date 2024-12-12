@@ -1,10 +1,12 @@
 import java.util.Scanner;
+
 public class Main {
     private static char[][] plateau = new char[3][3];
+
     public static void main(String[] args) {
         Scanner clavier = new Scanner(System.in);
 
-        System.out.print ("Entrez le nom du joueur 1 : ");
+        System.out.print("Entrez le nom du joueur 1 : ");
         String player1 = clavier.nextLine();
         System.out.print("Entrez le nom du joueur 2 : ");
         String player2 = clavier.nextLine();
@@ -15,9 +17,28 @@ public class Main {
                 {' ', ' ', ' '}
         };
 
-        afficherTableau(tableau);
-    }
+        char joueurActuel = 'X';
 
+        while (true) {
+            System.out.println( "Au tour du joueur " + joueurActuel + " !");
+            afficherTableau(tableau);
+
+            System.out.print("Choisissez une ligne (1-3) : ");
+            int ligne = clavier.nextInt() - 1;
+            System.out.print("Choisissez une colonne (1-3) : ");
+            int colonne = clavier.nextInt() - 1;
+
+            if (ligne < 0 || ligne >= 3 || colonne < 0 || colonne >= 3) {
+                System.out.println("Les coordonnées doivent être entre 1 et 3.");
+            } else if (tableau[ligne][colonne] != ' ') {
+                System.out.println("La case est déjà prise. Choisissez une autre.");
+            } else {
+                tableau[ligne][colonne] = joueurActuel;
+
+                joueurActuel = (joueurActuel == 'X') ? 'O' : 'X';
+            }
+        }
+    }
     public static void afficherTableau(char[][] tableau) {
         for (int i = 0; i < 3; i++) {
             System.out.print("| ");
@@ -26,7 +47,6 @@ public class Main {
             }
             System.out.println();
             System.out.println("-------------");
-
         }
     }
 }
